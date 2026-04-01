@@ -1,0 +1,25 @@
+name: PromptShield
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Run PromptShield
+        uses: Zero-Harm-AI-LLC/promptshield@v1
+        with:
+          base-ref: origin/${{ github.base_ref || 'main' }}
+          output-format: github
+          fail-on: never
+          max-findings: 25
