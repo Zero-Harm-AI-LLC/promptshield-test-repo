@@ -21,6 +21,6 @@ This repo includes a GitHub Actions workflow at `.github/workflows/promptshield.
 - Action: `Zero-Harm-AI-LLC/promptshield@v1`
 - Trigger: pull requests (`opened`, `synchronize`, `reopened`) and manual runs
 - Output: GitHub Actions annotations in the workflow run
-- Default behavior: `fail-on: never` so this intentionally insecure sample repo can be scanned without failing every PR
+- Default behavior: `fail-on: any` so pull requests with PromptShield findings fail the check and can be used to gate merges
 
-If you want PromptShield to block merges once you're done validating it, change `fail-on` to `low`, `medium`, `high`, or `any`.
+If you want a less strict policy, change `fail-on` in `.github/workflows/promptshield.yml` to `low`, `medium`, `high`, or `never`.
