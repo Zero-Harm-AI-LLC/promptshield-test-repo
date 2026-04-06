@@ -14,6 +14,10 @@ It includes examples of:
 
 Do not use this code in production.
 
+## Contact
+
+For questions about PromptShield AI Security, email [info@scalapps.com](mailto:info@scalapps.com).
+
 ## PromptShield GitHub Action
 
 This repo includes a GitHub Actions workflow at `.github/workflows/promptshield.yml` that runs PromptShield on pull requests and on manual dispatch.
