@@ -31,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: promptshield-findings
-          path: ${{ steps.promptshield.outputs.findings-path }}
+          path: ${{ runner.temp }}/promptshield-findings.json
