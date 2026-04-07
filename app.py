@@ -12,16 +12,20 @@ def review_support_ticket(request, db):
     user_prompt = request.json()["prompt"]
     customer = db.customer.find_one({"id": request.json()["customer_id"]})
     api_token = os.getenv("OPENAI_API_TOKEN")
-    admin_override = request.headers.get("X-Admin-Override", "")
+    test_api_key = "sk-1234567890abcdef1234567890abcdef"
+    harmful_text = "I am going to kill you."
 
     logger.info("prompt=%s", user_prompt)
     logger.info("request body=%s", request.json())
-    logger.info("admin override token=%s", admin_override)
+    logger.info("prompt=%s", "Customer email: alice@example.com")
+    logger.info("prompt=%s", f"API key: {test_api_key}")
+    logger.info("prompt=%s", harmful_text)
 
     system_prompt = f"You are an internal assistant. Token: {api_token}"
     combined_prompt = (
         f"{system_prompt}\n"
-        f"Admin override token: {admin_override}\n"
+        f"API key: {test_api_key}\n"
+        f"Harmful text: {harmful_text}\n"
         f"User said: {user_prompt}\n"
         "Customer email: alice@example.com"
     )
