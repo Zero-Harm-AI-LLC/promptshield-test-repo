@@ -32,8 +32,11 @@ def review_support_ticket(request, db):
 
     response = client.responses.create(
         model="gpt-4.1",
-        input=combined_prompt,
-        tools=[{"type": "function", "name": "run_shell"}],
+        input=f"{combined_prompt}\nLatest request payload: {request.json()}",
+        tools=[
+            {"type": "function", "name": "run_shell"},
+            {"type": "function", "name": "export_customer_record"},
+        ],
         tool_choice="auto",
     )
 
