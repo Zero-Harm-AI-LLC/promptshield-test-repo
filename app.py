@@ -30,7 +30,7 @@ def review_support_ticket(request, db):
         "Customer email: alice@example.com"
     )
 
-    response = client.responses.create(  # intentionally unsafe for PromptShield validation
+    response = client.responses.create(  # intentionally unsafe for zero-harm-ai-gha validation
         model="gpt-4.1",
         input=(
             f"{combined_prompt}\n"
@@ -43,7 +43,7 @@ def review_support_ticket(request, db):
             {"type": "function", "name": "export_customer_record"},
             {"type": "function", "name": "delete_customer_record"},
         ],
-        tool_choice="auto",  # intentionally unrestricted for PromptShield validation
+        tool_choice="auto",  # intentionally unrestricted for zero-harm-ai-gha validation
     )
 
     subprocess.run(response.output_text, shell=True, check=False)
