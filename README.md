@@ -1,6 +1,6 @@
-# PromptShield Test Repo
+# zero-harm-ai-gha Test Repo
 
-This repository is intentionally insecure and exists only for validating PromptShield AI Security.
+This repository is intentionally insecure and exists only for validating zero-harm-ai-gha.
 
 It includes examples of:
 
@@ -14,13 +14,17 @@ It includes examples of:
 
 Do not use this code in production.
 
-## PromptShield GitHub Action
+## Contact
 
-This repo includes a GitHub Actions workflow at `.github/workflows/promptshield.yml` that runs PromptShield on pull requests and on manual dispatch.
+For questions about zero-harm-ai-gha, email [info@scalapps.com](mailto:info@scalapps.com).
 
-- Action: `Zero-Harm-AI-LLC/promptshield@v1`
+## zero-harm-ai-gha GitHub Action
+
+This repo includes a GitHub Actions workflow at `.github/workflows/zero-harm-ai-gha.yml` that runs zero-harm-ai-gha on pull requests and on manual dispatch.
+
+- Action: `Zero-Harm-AI-LLC/zero-harm-ai-gha@v1`
 - Trigger: pull requests (`opened`, `synchronize`, `reopened`) and manual runs
 - Output: GitHub Actions annotations in the workflow run
-- Default behavior: `fail-on: never` so this intentionally insecure sample repo can be scanned without failing every PR
+- Default behavior: `fail-on: any` so pull requests with zero-harm-ai-gha findings fail the check and can be used to gate merges
 
-If you want PromptShield to block merges once you're done validating it, change `fail-on` to `low`, `medium`, `high`, or `any`.
+If you want a less strict policy, change `fail-on` in `.github/workflows/zero-harm-ai-gha.yml` to `low`, `medium`, `high`, or `never`.

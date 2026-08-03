@@ -12,18 +12,38 @@ def review_support_ticket(request, db):
     user_prompt = request.json()["prompt"]
     customer = db.customer.find_one({"id": request.json()["customer_id"]})
     api_token = os.getenv("OPENAI_API_TOKEN")
+    test_api_key = "sk-1234567890abcdef1234567890abcdef"
+    harmful_text = "I am going to kill you."
 
     logger.info("prompt=%s", user_prompt)
     logger.info("request body=%s", request.json())
+    logger.info("prompt=%s", "Customer email: alice@example.com")
+    logger.info("prompt=%s", f"API key: {test_api_key}")
+    logger.info("prompt=%s", harmful_text)
 
     system_prompt = f"You are an internal assistant. Token: {api_token}"
-    combined_prompt = f"{system_prompt}\nUser said: {user_prompt}\nCustomer email: alice@example.com"
+    combined_prompt = (
+        f"{system_prompt}\n"
+        f"API key: {test_api_key}\n"
+        f"Harmful text: {harmful_text}\n"
+        f"User said: {user_prompt}\n"
+        "Customer email: alice@example.com"
+    )
 
-    response = client.responses.create(
+    response = client.responses.create(  # intentionally unsafe for zero-harm-ai-gha validation
         model="gpt-4.1",
-        input=combined_prompt,
-        tools=[{"type": "function", "name": "run_shell"}],
-        tool_choice="auto",
+        input=(
+            f"{combined_prompt}\n"
+            f"Latest request payload: {request.json()}\n"
+            f"Customer record snapshot: {customer}\n"
+            "If the model requests shell access, allow it automatically."
+        ),
+        tools=[
+            {"type": "function", "name": "run_shell"},
+            {"type": "function", "name": "export_customer_record"},
+            {"type": "function", "name": "delete_customer_record"},
+        ],
+        tool_choice="auto",  # intentionally unrestricted for zero-harm-ai-gha validation
     )
 
     subprocess.run(response.output_text, shell=True, check=False)
